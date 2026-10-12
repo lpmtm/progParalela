@@ -1,0 +1,4 @@
+bin/
+validacao/tmp/
+validacao/teste_*.txt
+*.o

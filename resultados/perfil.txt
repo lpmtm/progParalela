@@ -1,0 +1,60 @@
+rep=1 N=1000
+N=1000 passos=10  checksum=54000.000000  tempo=0.047074 s
+forcas=0.047031 s  atualizacao=0.000026 s  f=0.999451
+rep=2 N=1000
+N=1000 passos=10  checksum=54000.000000  tempo=0.045540 s
+forcas=0.045498 s  atualizacao=0.000024 s  f=0.999463
+rep=3 N=1000
+N=1000 passos=10  checksum=54000.000000  tempo=0.045591 s
+forcas=0.045550 s  atualizacao=0.000025 s  f=0.999457
+rep=4 N=1000
+N=1000 passos=10  checksum=54000.000000  tempo=0.047508 s
+forcas=0.047434 s  atualizacao=0.000036 s  f=0.999245
+rep=5 N=1000
+N=1000 passos=10  checksum=54000.000000  tempo=0.044426 s
+forcas=0.044388 s  atualizacao=0.000024 s  f=0.999451
+rep=1 N=2000
+N=2000 passos=10  checksum=118000.000000  tempo=0.191219 s
+forcas=0.191025 s  atualizacao=0.000053 s  f=0.999722
+rep=2 N=2000
+N=2000 passos=10  checksum=118000.000000  tempo=0.217804 s
+forcas=0.217684 s  atualizacao=0.000064 s  f=0.999706
+rep=3 N=2000
+N=2000 passos=10  checksum=118000.000000  tempo=0.213444 s
+forcas=0.213291 s  atualizacao=0.000097 s  f=0.999545
+rep=4 N=2000
+N=2000 passos=10  checksum=118000.000000  tempo=0.236379 s
+forcas=0.236226 s  atualizacao=0.000084 s  f=0.999645
+rep=5 N=2000
+N=2000 passos=10  checksum=118000.000000  tempo=0.228185 s
+forcas=0.227989 s  atualizacao=0.000102 s  f=0.999554
+rep=1 N=4000
+N=4000 passos=10  checksum=276000.000000  tempo=0.757341 s
+forcas=0.757103 s  atualizacao=0.000108 s  f=0.999857
+rep=2 N=4000
+N=4000 passos=10  checksum=276000.000000  tempo=0.737880 s
+forcas=0.737701 s  atualizacao=0.000105 s  f=0.999858
+rep=3 N=4000
+N=4000 passos=10  checksum=276000.000000  tempo=0.810126 s
+forcas=0.809893 s  atualizacao=0.000131 s  f=0.999839
+rep=4 N=4000
+N=4000 passos=10  checksum=276000.000000  tempo=0.839229 s
+forcas=0.839022 s  atualizacao=0.000120 s  f=0.999857
+rep=5 N=4000
+N=4000 passos=10  checksum=276000.000000  tempo=0.849282 s
+forcas=0.849056 s  atualizacao=0.000142 s  f=0.999833
+rep=1 N=8000
+N=8000 passos=10  checksum=712000.000000  tempo=2.917401 s
+forcas=2.917060 s  atualizacao=0.000223 s  f=0.999924
+rep=2 N=8000
+N=8000 passos=10  checksum=712000.000000  tempo=2.897900 s
+forcas=2.897578 s  atualizacao=0.000210 s  f=0.999928
+rep=3 N=8000
+N=8000 passos=10  checksum=712000.000000  tempo=2.837586 s
+forcas=2.837239 s  atualizacao=0.000239 s  f=0.999916
+rep=4 N=8000
+N=8000 passos=10  checksum=712000.000000  tempo=2.839154 s
+forcas=2.838805 s  atualizacao=0.000242 s  f=0.999915
+rep=5 N=8000
+N=8000 passos=10  checksum=712000.000000  tempo=2.991873 s
+forcas=2.991437 s  atualizacao=0.000280 s  f=0.999906
