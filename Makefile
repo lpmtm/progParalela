@@ -3,13 +3,15 @@
 
 CXX      ?= g++
 CXXFLAGS ?= -O2
+MPICXX   ?= mpicxx
+NPS      := 1 2 3 4
 BIN      := bin
 SIZES    := 1000 2000 4000 8000
 PASSOS   := 10
 
-.PHONY: all help seq prof valid refs check baseline perfil clean
+.PHONY: all help seq prof valid refs check baseline perfil mpi check-mpi clean
 
-all: seq
+all: seq mpi
 
 help:
 	@echo "Alvos disponíveis:"
@@ -20,6 +22,8 @@ help:
 	@echo "  make check     compara uma nova execução com as referências"
 	@echo "  make baseline  mede o baseline (resultados/baseline.csv)"
 	@echo "  make perfil    mede a divisão forças/atualização (resultados/perfil.txt)"
+	@echo "  make mpi       compila a versão MPI (06_nbody_mpi)"
+	@echo "  make check-mpi valida a versão MPI contra as referências com -np $(NPS)"
 	@echo "  make clean     remove binários e arquivos temporários"
 
 $(BIN):
@@ -34,9 +38,13 @@ $(BIN)/06_nbody_prof: sequencial/06_nbody_prof.cpp | $(BIN)
 $(BIN)/06_nbody_valid: validacao/06_nbody_valid.cpp | $(BIN)
 	$(CXX) $(CXXFLAGS) -o $@ $<
 
+$(BIN)/06_nbody_mpi: mpi/06_nbody_mpi.cpp | $(BIN)
+	$(MPICXX) $(CXXFLAGS) -o $@ $<
+
 seq: $(BIN)/06_nbody
 prof: $(BIN)/06_nbody_prof
 valid: $(BIN)/06_nbody_valid
+mpi: $(BIN)/06_nbody_mpi
 
 # Referências: estado final (x, y, vx, vy) com 17 dígitos para cada N
 refs: valid
@@ -51,6 +59,15 @@ check: valid
 	  ./$(BIN)/06_nbody_valid $$N $(PASSOS) validacao/tmp/teste_$$N.txt > /dev/null; \
 	  bash validacao/compara.sh validacao/ref_$$N.txt validacao/tmp/teste_$$N.txt || exit 1; \
 	done
+	@rm -rf validacao/tmp
+
+# Validação MPI: o estado final deve ser idêntico bit a bit para qualquer -np
+check-mpi: mpi
+	@mkdir -p validacao/tmp
+	@for N in $(SIZES); do for P in $(NPS); do \
+	  mpirun -np $$P ./$(BIN)/06_nbody_mpi $$N $(PASSOS) validacao/tmp/mpi_$$N.txt > /dev/null; \
+	  echo -n "np=$$P "; bash validacao/compara.sh validacao/ref_$$N.txt validacao/tmp/mpi_$$N.txt || exit 1; \
+	 done; done
 	@rm -rf validacao/tmp
 
 # Baseline: 1 aquecimento descartado + 5 repetições por N (script do protocolo)
