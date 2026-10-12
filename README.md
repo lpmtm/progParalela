@@ -1,4 +1,4 @@
-# Simulação de N Corpos — Programação Paralela (CCO085, 2026/2)
+# Simulação de N Corpos — Programação Paralela
 
 Projeto acadêmico do IESB. A partir do código sequencial fornecido pelo professor
 (`sequencial/06_nbody.cpp`), o projeto mede o baseline, faz o perfilamento, estima o
@@ -7,11 +7,11 @@ e MPI (memória distribuída), validadas contra o baseline.
 
 ## Divisão de frentes
 
-| Frente | Responsável | Pasta | 
-|---|---|---|---|
-| 1 — Baseline e perfilamento | Caroline Lopes Martins | `sequencial/`, `scripts/`, `resultados/` | 
-| 2 — OpenMP | João Miguel Luiz da Costa | `openmp/` | 
-| 3 — MPI | Ian Melo Gonçalves | `mpi/` | 
+| Frente | Responsável | Pasta |    
+|---|---|---| 
+| 1 — Baseline e perfilamento | Caroline Lopes Martins | `sequencial/`, `scripts/`, `resultados/` |   
+| 2 — OpenMP | João Miguel Luiz da Costa | `openmp/` |   
+| 3 — MPI | Ian Melo Gonçalves | `mpi/` |   
 
 Os responsáveis estão em `AUTORES.md`. Todos devem entender o projeto inteiro: a
 apresentação faz arguição cruzada.
@@ -50,9 +50,11 @@ make perfil     # mede forças x atualização: resultados/perfil.txt
 Use `make help` para ver a lista de alvos e `make clean` para remover os binários.
 
 ## Estrutura
-trabalho/
+
+```bash
+progParalela/
 ├── sequencial/
-│ ├── 06_nbody.cpp código original do professor (não alterar a lógica)
+│ ├── 06_nbody.cpp código original
 │ └── 06_nbody_prof.cpp cópia com cronômetros em volta de cada laço
 ├── validacao/
 │ ├── 06_nbody_valid.cpp cópia que grava o estado final com 17 dígitos
@@ -68,6 +70,7 @@ trabalho/
 ├── Makefile
 ├── README.md
 └── AUTORES.md
+```
 
 
 ## Protocolo de medição
