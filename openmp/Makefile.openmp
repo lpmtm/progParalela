@@ -1,0 +1,15 @@
+# Acrescente estas regras ao Makefile da raiz do repositorio:
+.PHONY: openmp run-openmp
+
+openmp: bin/06_nbody_openmp
+
+bin/06_nbody_openmp: openmp/06_nbody_openmp.cpp | bin
+	$(CXX) $(CXXFLAGS) -fopenmp -o $@ $<
+
+run-openmp: openmp
+	@for n in 1000 2000 4000 8000; do \
+	  for p in 1 2 4 8; do \
+	    echo "N=$$n threads=$$p"; \
+	    OMP_NUM_THREADS=$$p ./bin/06_nbody_openmp $$n 10; \
+	  done; \
+	done
