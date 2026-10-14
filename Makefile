@@ -9,7 +9,7 @@ BIN      := bin
 SIZES    := 1000 2000 4000 8000
 PASSOS   := 10
 
-.PHONY: all help seq prof valid refs check baseline perfil mpi check-mpi clean
+.PHONY: all help seq prof valid refs check baseline perfil mpi check-mpi medicao-mpi graficos-mpi clean
 
 all: seq mpi
 
@@ -24,6 +24,8 @@ help:
 	@echo "  make perfil    mede a divisão forças/atualização (resultados/perfil.txt)"
 	@echo "  make mpi       compila a versão MPI (06_nbody_mpi)"
 	@echo "  make check-mpi valida a versão MPI contra as referências com -np $(NPS)"
+	@echo "  make medicao-mpi mede seq + MPI (resultados/mpi.csv)"
+	@echo "  make graficos-mpi gera resumo e gráficos (precisa de matplotlib)"
 	@echo "  make clean     remove binários e arquivos temporários"
 
 $(BIN):
@@ -69,6 +71,13 @@ check-mpi: mpi
 	  echo -n "np=$$P "; bash validacao/compara.sh validacao/ref_$$N.txt validacao/tmp/mpi_$$N.txt || exit 1; \
 	 done; done
 	@rm -rf validacao/tmp
+
+# Medição MPI: escalabilidade forte e fraca, mesmo protocolo do baseline
+medicao-mpi: seq mpi
+	bash scripts/medicao_mpi.sh
+
+graficos-mpi:
+	python3 scripts/graficos_mpi.py
 
 # Baseline: 1 aquecimento descartado + 5 repetições por N (script do protocolo)
 baseline: seq

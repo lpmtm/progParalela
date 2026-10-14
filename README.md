@@ -49,6 +49,38 @@ make perfil     # mede forças x atualização: resultados/perfil.txt
 
 Use `make help` para ver a lista de alvos e `make clean` para remover os binários.
 
+### Versão MPI (frente 3)
+
+Dentro do contêiner:
+
+```bash
+export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1   # o usuário do contêiner é root
+make check-mpi     # valida com -np 1, 2, 3, 4 (deve dar IDENTICO em todas)
+make medicao-mpi   # mede seq + MPI, forte e fraca: resultados/mpi.csv (~2 min)
+```
+
+Os gráficos usam matplotlib, que não vem no contêiner. Gere-os fora dele:
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install matplotlib   # só na primeira vez
+.venv/bin/python scripts/graficos_mpi.py
+```
+
+Isso imprime um resumo (speedup, eficiência, % de comunicação) e gera
+`resultados/mpi_resumo.csv` e os gráficos em `resultados/graficos/`.
+
+Para rodar na mão: `mpirun -np 4 ./bin/06_nbody_mpi 8000 10`. Além de `checksum` e
+`tempo`, a saída mostra `comm`, o tempo gasto no `MPI_Allgatherv` (comunicação + espera).
+
+Observações:
+
+- O aviso *"failed to bind memory"* é inofensivo: o Docker bloqueia a fixação de memória
+  por padrão. Para eliminá-lo, suba o contêiner com `--cap-add SYS_NICE`. Exemplo, no
+  Linux, sem o VS Code:
+  `docker run -it --rm --cap-add SYS_NICE -v "$PWD":/w -w /w iesb/pp-lab:2026.2 bash`
+- Não rode duas medições ao mesmo tempo, porque elas disputam os mesmos núcleos.
+  Use `-np` até o número de núcleos físicos (4).
+
 ## Estrutura
 
 ```bash
@@ -61,12 +93,18 @@ progParalela/
 │ ├── compara.sh compara duas saídas (bit a bit e erro relativo)
 │ └── ref_1000.txt ... ref_8000.txt
 ├── scripts/
-│ └── medicao.sh protocolo de medição do baseline
+│ ├── medicao.sh protocolo de medição do baseline
+│ ├── medicao_mpi.sh mesmo protocolo para seq + MPI (forte e fraca)
+│ └── graficos_mpi.py resumo e gráficos da versão MPI
 ├── resultados/
 │ ├── baseline.csv
-│ └── perfil.txt
+│ ├── perfil.txt
+│ ├── mpi.csv medições brutas da versão MPI
+│ ├── mpi_resumo.csv medianas, speedup, eficiência, % comunicação
+│ └── graficos/ gráficos de tempo, speedup, eficiência, overhead e fraca
 ├── openmp/ frente 2
-├── mpi/ frente 3
+├── mpi/
+│ └── 06_nbody_mpi.cpp versão MPI (blocos de i + MPI_Allgatherv)
 ├── Makefile
 ├── README.md
 └── AUTORES.md
